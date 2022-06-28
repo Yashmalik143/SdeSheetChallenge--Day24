@@ -1,0 +1,40 @@
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode
+    {
+    public :
+        T data;
+        BinaryTreeNode < T > *left;
+        BinaryTreeNode < T > *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+void changeTree(BinaryTreeNode < int > * root) {
+    // Write your code here.
+    if(!root) return ;
+    
+    int child=0;
+    if(root->left) child+=root->left->data; //store left chid data in child
+    if(root->right) child+=root->right->data;//same with right
+    
+    if(child>=root->data) root->data=child; //root ka data chota hai or chid ka sum jyda toh root->data =child
+    else{//update child as root->data
+        if(root->left)root->left->data=root->data;
+        else if(root->right) root->right->data=root->data;
+        }
+    changeTree(root->left); //call forchildrens
+    changeTree(root->right);
+    
+    int tot=0;//explicitly sum of child and make it root
+    if(root->left) tot+=root->left->data; //add left ka data
+    if(root->right) tot+= root->right->data;//add right ka data
+    if(root->left || root->right) root->data =tot; //assingn root->data as left->data+right->data
+}  
